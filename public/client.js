@@ -175,7 +175,6 @@ socket.on('connect', (error) => {
 
     stat.textContent = 'Connected';
     stat.classList.add('status__connect');
-
     connectStat = true;
     console.log('connected');
 
