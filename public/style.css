@@ -19,20 +19,27 @@ body {
     width: 100%;
     height: 100vh;
     background-size: cover;
+    /* background-image: url(https://images.wallpaperscraft.com/image/mountains_desert_sky_114247_1920x1080.jpg); */
     background-image: url(https://images.wallpaperscraft.com/image/mountains_summit_clouds_121304_1920x1080.jpg);
     /* background: linear-gradient(to right, #159957, #155799); */
     /* background: linear-gradient(to right, #f46b45, #eea849); */
 }
 
-
+myteg{
+    width: 100px;
+    height: 100px;
+    background-color: red;
+}
 
 .navigation{
+    position: fixed;
     display: flex;
     min-height: 50px;
     width: 100%;
     background-color: rgb(241, 241, 241);
-    border-bottom: 1px rgb(143, 143, 143) solid;
+    border-bottom: 1px rgb(219, 219, 219) solid;
     box-shadow: 1px 1px 5px 0px rgba(0, 41, 12, 0.51);
+    z-index: 9;
 }
 
 .content__nav{
@@ -51,10 +58,12 @@ body {
 
 .container{
     display: flex;
+    position: relative;
     flex-direction: row;
-    height: 760px;
+    height: 80%;
     width: 75%;
-    margin: 40px auto 0 auto;
+    top: 100px;
+    margin: 0 auto 0 auto;
     border-radius: 5px;
     overflow: hidden;
     background-color: rgb(241, 241, 241);
@@ -78,17 +87,24 @@ body {
 .btnSend{
     width: 10%;
 }
+.send__area form{
+    width: 100%;
+}
 
 .button__style{
     background-color: #2196F3;
     color: white;
     font-size: 16px;
     padding: 10px 15px;
-    border-radius: 5px;
+    /* border-radius: 5px; */
     outline: none;
     cursor: pointer;
     border: none;
     /* border-bottom: 3px solid rgb(17, 121, 206); */
+}
+
+.button__style:hover{
+    background-color: rgb(16, 121, 207);
 }
 
 .status{
@@ -118,7 +134,8 @@ body {
 .send__area{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    width: 100%;
+    box-shadow: 1px 1px 5px 0px rgba(0, 41, 12, 0.51);
 }
 
 input{
@@ -130,7 +147,7 @@ input{
     border: 2px solid #d4edda;
 }
 input:focus{
-    border: 2px solid #c3e6cb;
+    /* border: 2px solid #c3e6cb; */
 }
 
 .message{
@@ -139,13 +156,16 @@ input:focus{
 }
 
 .user{
-    color: #fff;
+    color: rgb(207, 207, 207);
     padding: 12px 35px 12px 35px;
+    transition: 0.5s;
 }
 
 .user:hover{
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: rgba(0, 0, 0, 0.425);
     cursor: pointer;
+    color: white;
+    transition: 0.5s;
 }
 
 .centr{
@@ -189,5 +209,59 @@ i:hover {
 
 .textArea{
     border-radius: 0;
-    width: 90%;
+    border: none;
+    height: 55px;
+    width: 100%;
 }
+
+@media only screen and (max-width: 600px) {
+    .container{
+        width: 100%;
+        height: 100vh;
+        top: 50px;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .send__area{
+        flex-direction: column;
+    }
+
+    .btnSend{
+        width: 100%;
+    }
+
+    .section__1{
+        display: none;
+    }
+
+    .block_message{
+        padding: 25px 10px;
+    }
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-track {
+    /* border-radius: 10px; */
+    background: rgba(0,0,0,0.1);
+    border: 1px solid #ccc;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    /* border-radius: 10px; */
+    background: linear-gradient(left, #fff, #e4e4e4);
+    border: 1px solid #aaa;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #fff;
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(left, #22ADD4, #1E98BA);
+  }
+

@@ -5,6 +5,7 @@ var port = 1285;
 var app = express();
 
 var idList = {};
+var clientsID = [];
 var contClients = 0;
 
 // mongo.connect('mongodb://127.0.0.1/chat', function(err, db){
@@ -18,6 +19,7 @@ var contClients = 0;
 //     db.close();
 // });
 
+
 var server = app.listen(port, () => {
     console.log(`Listeningh ${port} port`);
 });
@@ -27,17 +29,26 @@ app.use(express.static('public'));
 var io = socket(server);
 
 io.on('connection', (socket) => {
-    idList[socket.id] = socket.id;
+
     contClients++;
-
-    socket.on('chat', (data) => {
-        io.emit('chat', data);
-
-        if(data.message === 'exit'){
-                socket.disconnect();
-        }
+    //idList[socket.id] = socket.id;
+    io.clients((error, clients) => {
+        if (error) throw error;
+        clientsID = clients;
     });
 
+    socket.on('chat', (data) => {
+        
+        if(data.message !== ''){
+            if(data.name !== ''){
+                io.emit('chat', data);
+            }
+        }
+        if(data.message === '/exit'){
+            socket.disconnect();
+        }
+    });
+    
     socket.emit('id', {
         id: socket.id
     });
@@ -46,17 +57,26 @@ io.on('connection', (socket) => {
         welcome: 'Welcome to our chat! 😄',
         errorNickname: 'Please choose a nickname!'
     });
-
+    
     socket.on('disconnect', reason => {
         contClients--;
-        
-        if(idList[socket.id]){
 
-            io.sockets.emit('leave', {
-                id: socket.id
-            });
-            delete idList[socket.id];
-        }
+        clientsID.forEach((id, i, clientsID) => {
+            if(clientsID[i] === socket.id) {
+                io.emit('leave', {
+                    id: socket.id
+                });
+                delete clientsID[i];
+            }
+        });
+
+        // if(idList[socket.id]){
+
+        //     io.sockets.emit('leave', {
+        //         id: socket.id
+        //     });
+        //     delete idList[socket.id];
+        // }
     });
 });
 

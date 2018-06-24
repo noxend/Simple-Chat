@@ -1,4 +1,5 @@
-
+// import React from 'react'
+// import {render} from 'react-dom'
 
 var buttonSend = document.getElementById('buttonSend'),
     nickName = document.getElementById('nickName'),
@@ -42,6 +43,8 @@ function sendMsg(value) {
     msg.classList.add('message');
     block_messageID.appendChild(msg);
     msg.innerHTML = `<strong style="color: ${value.colorName}">${value.name}:</strong> ${value.message}`;
+
+    block_messageID.scrollTop = block_messageID.scrollHeight;
 }
 
 // function joinUser(value) {
@@ -65,7 +68,15 @@ function leave(value) {
     var msg = document.createElement('div');
     msg.classList.add('message');
     block_messageID.appendChild(msg);
-    msg.innerHTML = `<div style="color: #a2a2a2; font-style: italic;"><strong>${value.id}</strong> leave</div>`;
+    msg.innerHTML = `<div style="color: #a2a2a2; font-style: italic;"><strong>${value.id}</strong> left</div>`;
+}
+
+function newConect(value) {
+
+    var msg = document.createElement('div');
+    msg.classList.add('message');
+    block_messageID.appendChild(msg);
+    msg.innerHTML = `<div style="color: #a2a2a2; font-style: italic;"><strong>${value.nickname}</strong> join</div>`;
 }
 
 // function funUserId(){
@@ -101,7 +112,7 @@ btnSettings.addEventListener('click', () => {
 });
 
 buttonSend.addEventListener('click', () => {
-    if (connectStat === true) {
+    if (connectStat) {
         if (nickName.value !== '') {
             if (textArea.value !== '') {
                 event.preventDefault();
@@ -118,32 +129,30 @@ buttonSend.addEventListener('click', () => {
         }
     }
 });
-
-form.addEventListener('submit', (event) => {
-
-    event.preventDefault();
-
-    if (true) {
-        if (nickName.value !== '') {
-            if (textArea.value !== '') {
-                event.preventDefault();
-
-                socket.emit('chat', {
-                    colorName: randomColors,
-                    message: textArea.value,
-                    name: nickName.value,
-                    id: userId
-                });
-
-                textArea.value = '';
+textArea.addEventListener('keydown', (event) => {
+    if(event.keyCode === 13) {
+        if (connectStat) {
+            if (nickName.value !== '') {
+                if (textArea.value !== '') {
+                    event.preventDefault();
+    
+                    socket.emit('chat', {
+                        colorName: randomColors,
+                        message: textArea.value,
+                        name: nickName.value,
+                        id: userId
+                    });
+    
+                    textArea.value = '';
+                }
             }
         }
     }
 });
+
 
 socket.on('leave', data => {
     leave(data);
-    console.log(data);
 });
 
 socket.on('chat', data => {
@@ -162,7 +171,6 @@ socket.on('notification', data => {
     // errorNickname(data);
 });
 
-
 socket.on('disconnect', (reason) => {
     stat.textContent = 'Disconnect';
     stat.classList.remove('status__connect');
@@ -171,7 +179,7 @@ socket.on('disconnect', (reason) => {
     console.log(reason);
 });
 
-socket.on('connect', (error) => {
+socket.on('connect', (error) => {    
 
     stat.textContent = 'Connected';
     stat.classList.add('status__connect');
