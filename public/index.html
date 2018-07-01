@@ -5,60 +5,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/style.css">
-
-    <link rel="stylesheet" href="/public/style.css">
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
-    
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.4.1/umd/react-dom.production.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.4.1/umd/react.production.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/6.1.19/browser.js"></script> -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg"
+        crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyApi_SuXohgPp8tEQpbcSj9rdZE7gxDwaE",
+            authDomain: "chat-2b6a4.firebaseapp.com",
+            databaseURL: "https://chat-2b6a4.firebaseio.com",
+            projectId: "chat-2b6a4",
+            storageBucket: "chat-2b6a4.appspot.com",
+            messagingSenderId: "518384313272"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+    <link rel="stylesheet" href="/style.css">
+    <!-- <link rel="stylesheet" href="/public/style.css"> -->
     <title>Document</title>
 </head>
 
 <body id="body">
-    <myteg></myteg>
     <nav class="navigation">
         <div class="centr">
             <div class="content__nav">
-              <div class="title" id="title">chatOnWebSockets</div>
-              <i class="fas fa-cog" style="line-height: 50px" id="settings"></i>
+                <div class="title" id="title">chatOnWebSockets</div>
+                <i class="fas fa-cog" style="line-height: 50px" id="settings"></i>
             </div>
         </div>
     </nav>
 
-    <div class="modalWindow" id="modalWindowId">
-
-        <div class="content">
-
-            <input id="nickName" type="text" required placeholder="Your name...">
-            <i class="far fa-window-close" id="btnCloseModal" style="font-size: 18px"></i>
+    <div class="loginPanel" id="loginPanel">
+        <div class="input__items">
+            <form action="" id="submitNickname" class="form">
+                <input type="text" id="submitValue" class="input__stlye" placeholder="Nickname">
+                <button type="submit" id="submitOk" class="button__style button__login">Enter...</button>
+            </form>
         </div>
-
     </div>
 
-    <div class="container">
+    <div class="modalWindow" id="modalWindowId">
+        <div class="content">
+            <input id="nickName" type="text" class="input__stlye" required placeholder="Your name...">
+            <input id="imageLink" type="text" class="input__stlye" required placeholder="URL Image">
+            <i class="far fa-window-close" id="btnCloseModal" style="font-size: 18px"></i>
+        </div>
+    </div>
+
+    <div class="container" id="mainContainer">
 
         <div class="section__1">
             <div id="status" class="status"></div>
-            <div id="users" class="users">
-                <div class="user">user</div>
-                <div class="user">user</div>
-                <div class="user">...</div>
-            </div>
+            <div id="users" class="users"></div>
         </div>
         <div class="section__2">
             <div id="block_messageID" class="block_message"></div>
-
             <div class="send__area">
-                <input type="text" class="textArea" required autocomplete="off" id="textArea" placeholder="Type here...">
+                <input type="text" class="textArea input__stlye" required autocomplete="off" id="textArea" placeholder="Type here...">
                 <button id="buttonSend" class="button__style btnSend" onclick="">Send...</button>
             </div>
-
         </div>
     </div>
-    <script src="/client.js"></script>
+    <!-- <script src="/public/msgBlock.js" type="text/babel"></script> -->
+    <script src="/client.js" type="text/babel"></script>
+    <script src="/userInfo.js"></script>
 </body>
+
 </html>
